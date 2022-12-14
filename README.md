@@ -1,0 +1,2 @@
+# gogen
+Golang Generics library
