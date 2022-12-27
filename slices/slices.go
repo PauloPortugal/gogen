@@ -34,3 +34,20 @@ func Contains[T any](slice []T, p func(T) bool) bool {
 	}
 	return false
 }
+
+// Distinct returns a stream consisting of the distinct elements that match the provided predicate.
+func Distinct[T any, R comparable](slice []T, f func(T) R) []T {
+	ret := make([]T, 0)
+	exists := make(map[R]bool)
+
+	for _, e := range slice {
+		r := f(e)
+		_, ok := exists[r]
+		if ok {
+			continue
+		}
+		exists[r] = true
+		ret = append(ret, e)
+	}
+	return ret
+}
