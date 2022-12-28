@@ -6,56 +6,53 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestFilter(t *testing.T) {
-	Convey("Given I have an array of numbers from 1 to 10", t, func() {
-		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-		Convey("When I call 'Filter' with a function to filter multiples of 5", func() {
-			expected := Filter(input, func(e int) bool {
-				return e%5 == 0
+func TestAll(t *testing.T) {
+	Convey("Given I have an array of even numbers from 2 to 20", t, func() {
+		input := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+		Convey("When I call 'All' to test even numbers", func() {
+			actual := All(input, func(e int) bool {
+				return e%2 == 0
 			})
-			Convey("Then the result should be an array of elements 5 and 10", func() {
-				actual := []int{5, 10}
-				So(actual, ShouldResemble, expected)
+			Convey("Then the result should be true", func() {
+				So(actual, ShouldEqual, true)
 			})
 		})
 	})
 
-	Convey("Given I have an empty array", t, func() {
-		var input []int
-		Convey("When I call 'Filter' with a function to filter multiples of 5", func() {
-			expected := Filter(input, func(e int) bool {
-				return e%5 == 0
+	Convey("Given I have an array of numbers from 2 to 21", t, func() {
+		input := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 21}
+		Convey("When I call 'All' to test even numbers", func() {
+			actual := All(input, func(e int) bool {
+				return e%2 == 0
 			})
-			Convey("Then the result should be an empty array", func() {
-				var actual []int
-				So(actual, ShouldResemble, expected)
+			Convey("Then the result should be false", func() {
+				So(actual, ShouldEqual, false)
 			})
 		})
 	})
 }
 
-func TestMap(t *testing.T) {
+func TestAny(t *testing.T) {
 	Convey("Given I have an array of numbers from 1 to 10", t, func() {
 		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-		Convey("When I call 'Map' with a function to double the element", func() {
-			expected := Map(input, func(e int) int {
-				return e * 2
+		Convey("When I call 'Any' for values greater than 7", func() {
+			actual := Any(input, func(e int) bool {
+				return e > 7
 			})
-			Convey("Then the result should be an array of elements 5 and 10", func() {
-				actual := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
-				So(actual, ShouldResemble, expected)
+			Convey("Then the result should be true", func() {
+				So(actual, ShouldEqual, true)
 			})
 		})
 	})
 
-	Convey("Given I have an empty array", t, func() {
-		var input []int
-		Convey("When I call 'Map' with a function to double the element", func() {
-			expected := Map(input, func(e int) int {
-				return e * 2
+	Convey("Given I have an array of numbers from 1 to 10", t, func() {
+		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		Convey("When I call 'Any' for values greater than 10", func() {
+			actual := Any(input, func(e int) bool {
+				return e > 10
 			})
-			Convey("Then the result should be an empty array", func() {
-				So(0, ShouldEqual, len(expected))
+			Convey("Then the result should be false", func() {
+				So(actual, ShouldEqual, false)
 			})
 		})
 	})
@@ -65,9 +62,9 @@ func TestCount(t *testing.T) {
 	Convey("Given I have an array of numbers from 1 to 10", t, func() {
 		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 		Convey("When I call 'Count'", func() {
-			expected := Count(input)
+			actual := Count(input)
 			Convey("Then the result should be 10", func() {
-				So(10, ShouldEqual, expected)
+				So(actual, ShouldEqual, 10)
 			})
 		})
 	})
@@ -75,9 +72,9 @@ func TestCount(t *testing.T) {
 	Convey("Given I have an empty array", t, func() {
 		var input []int
 		Convey("When I call 'Count'", func() {
-			expected := Count(input)
+			actual := Count(input)
 			Convey("Then the result should be 0", func() {
-				So(0, ShouldEqual, expected)
+				So(actual, ShouldEqual, 0)
 			})
 		})
 	})
@@ -87,11 +84,11 @@ func TestContains(t *testing.T) {
 	Convey("Given I have an array of numbers from 1 to 10", t, func() {
 		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 		Convey("When I call 'Contains' to find '2'", func() {
-			expected := Contains(input, func(e int) bool {
+			actual := Contains(input, func(e int) bool {
 				return e == 2
 			})
 			Convey("Then the result should be 'true'", func() {
-				So(true, ShouldEqual, expected)
+				So(actual, ShouldEqual, true)
 			})
 		})
 	})
@@ -99,11 +96,11 @@ func TestContains(t *testing.T) {
 	Convey("Given I have an array of numbers from 1 to 10", t, func() {
 		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 		Convey("When I call 'Contains' to find '12'", func() {
-			expected := Contains(input, func(e int) bool {
+			actual := Contains(input, func(e int) bool {
 				return e == 12
 			})
 			Convey("Then the result should be 'false'", func() {
-				So(false, ShouldEqual, expected)
+				So(actual, ShouldEqual, false)
 			})
 		})
 	})
@@ -111,11 +108,11 @@ func TestContains(t *testing.T) {
 	Convey("Given I have an empty array", t, func() {
 		var input []int
 		Convey("When I call 'Contains' to find '2'", func() {
-			expected := Contains(input, func(e int) bool {
+			actual := Contains(input, func(e int) bool {
 				return e == 2
 			})
 			Convey("Then the result should be 'false'", func() {
-				So(false, ShouldEqual, expected)
+				So(actual, ShouldEqual, false)
 			})
 		})
 	})
@@ -140,6 +137,61 @@ func TestDistinct(t *testing.T) {
 		Convey("When I call 'Count'", func() {
 			actual := Distinct(input, func(e int) int {
 				return e
+			})
+			Convey("Then the result should be an empty array", func() {
+				So(len(actual), ShouldEqual, 0)
+			})
+		})
+	})
+}
+
+func TestFilter(t *testing.T) {
+	Convey("Given I have an array of numbers from 1 to 10", t, func() {
+		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		Convey("When I call 'Filter' with a function to filter multiples of 5", func() {
+			actual := Filter(input, func(e int) bool {
+				return e%5 == 0
+			})
+			Convey("Then the result should be an array of elements 5 and 10", func() {
+				expected := []int{5, 10}
+				So(actual, ShouldResemble, expected)
+			})
+		})
+	})
+
+	Convey("Given I have an empty array", t, func() {
+		var input []int
+		Convey("When I call 'Filter' with a function to filter multiples of 5", func() {
+			actual := Filter(input, func(e int) bool {
+				return e%5 == 0
+			})
+			Convey("Then the result should be an empty array", func() {
+				var expected []int
+				So(actual, ShouldResemble, expected)
+			})
+		})
+	})
+}
+
+func TestMap(t *testing.T) {
+	Convey("Given I have an array of numbers from 1 to 10", t, func() {
+		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		Convey("When I call 'Map' with a function to double the element", func() {
+			actual := Map(input, func(e int) int {
+				return e * 2
+			})
+			Convey("Then the result should be an array of elements 5 and 10", func() {
+				expected := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+				So(actual, ShouldResemble, expected)
+			})
+		})
+	})
+
+	Convey("Given I have an empty array", t, func() {
+		var input []int
+		Convey("When I call 'Map' with a function to double the element", func() {
+			actual := Map(input, func(e int) int {
+				return e * 2
 			})
 			Convey("Then the result should be an empty array", func() {
 				So(len(actual), ShouldEqual, 0)
