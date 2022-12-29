@@ -248,3 +248,31 @@ func TestNoneMatch(t *testing.T) {
 		})
 	})
 }
+
+func TestReduce(t *testing.T) {
+	Convey("Given I have an array of numbers from 1 to 5", t, func() {
+		input := []int{1, 2, 3, 4, 5}
+		Convey("When I call 'Reduce' to sum all values", func() {
+			initAcc := 0
+			actual := Reduce(input, initAcc, func(acc, e int) int {
+				return acc + e
+			})
+			Convey("Then the result should be equal to 15", func() {
+				So(actual, ShouldEqual, 15)
+			})
+		})
+	})
+
+	Convey("Given I have an array of strings representing the first 5 letters of the alphabet", t, func() {
+		input := []string{"a", "b", "c", "d", "e"}
+		Convey("When I call 'Reduce' to test odd numbers", func() {
+			initAcc := ""
+			actual := Reduce(input, initAcc, func(acc, e string) string {
+				return acc + e
+			})
+			Convey("Then the result should be equal to 'abcde'", func() {
+				So(actual, ShouldEqual, "abcde")
+			})
+		})
+	})
+}

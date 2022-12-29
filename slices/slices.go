@@ -80,7 +80,7 @@ func Filter[T any](slice []T, p func(T) bool) []T {
 }
 
 // Map returns a slice consisting of the results of applying the given function to the elements of the input slice.
-func Map[T any, R any](slice []T, p func(T) R) []R {
+func Map[T, R any](slice []T, p func(T) R) []R {
 	res := make([]R, len(slice))
 	for i, e := range slice {
 		res[i] = p(e)
@@ -96,4 +96,14 @@ func NoneMatch[T any](slice []T, p func(T) bool) bool {
 		}
 	}
 	return true
+}
+
+// Reduce performs a reduction on the elements of this stream, using the provided initial accumulation
+// and accumulation function to each element of the slice.
+func Reduce[T, R any](slice []T, initAcc R, fn func(R, T) R) R {
+	acc := initAcc
+	for _, e := range slice {
+		acc = fn(acc, e)
+	}
+	return acc
 }
