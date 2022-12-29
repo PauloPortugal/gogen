@@ -122,7 +122,30 @@ func TestDistinct(t *testing.T) {
 	Convey("Given I have an array of duplicate numbers from 1 to 3", t, func() {
 		input := []int{1, 2, 3, 3, 2, 1}
 		Convey("When I call 'Count'", func() {
-			actual := Distinct(input, func(e int) int {
+			actual := Distinct(input)
+			Convey("Then the result should be [1, 2, 3]", func() {
+				So(len(actual), ShouldEqual, 3)
+				So(actual, ShouldResemble, []int{1, 2, 3})
+			})
+		})
+	})
+
+	Convey("Given I have an empty array", t, func() {
+		var input []int
+		Convey("When I call 'Distinct'", func() {
+			actual := Distinct(input)
+			Convey("Then the result should be an empty array", func() {
+				So(len(actual), ShouldEqual, 0)
+			})
+		})
+	})
+}
+
+func TestDistinctBy(t *testing.T) {
+	Convey("Given I have an array of duplicate numbers from 1 to 3", t, func() {
+		input := []int{1, 2, 3, 3, 2, 1}
+		Convey("When I call 'Count'", func() {
+			actual := DistinctBy(input, func(e int) int {
 				return e
 			})
 			Convey("Then the result should be [1, 2, 3]", func() {
@@ -134,8 +157,8 @@ func TestDistinct(t *testing.T) {
 
 	Convey("Given I have an empty array", t, func() {
 		var input []int
-		Convey("When I call 'Count'", func() {
-			actual := Distinct(input, func(e int) int {
+		Convey("When I call 'Distinct'", func() {
+			actual := DistinctBy(input, func(e int) int {
 				return e
 			})
 			Convey("Then the result should be an empty array", func() {
@@ -195,6 +218,32 @@ func TestMap(t *testing.T) {
 			})
 			Convey("Then the result should be an empty array", func() {
 				So(len(actual), ShouldEqual, 0)
+			})
+		})
+	})
+}
+
+func TestNoneMatch(t *testing.T) {
+	Convey("Given I have an array of even numbers from 2 to 20", t, func() {
+		input := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+		Convey("When I call 'None Match' to test odd numbers", func() {
+			actual := NoneMatch(input, func(e int) bool {
+				return e%2 != 0
+			})
+			Convey("Then the result should be true", func() {
+				So(actual, ShouldEqual, true)
+			})
+		})
+	})
+
+	Convey("Given I have an array of numbers from 2 to 21", t, func() {
+		input := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 21}
+		Convey("When I call 'None Match' to test odd numbers", func() {
+			actual := NoneMatch(input, func(e int) bool {
+				return e%2 != 0
+			})
+			Convey("Then the result should be false", func() {
+				So(actual, ShouldEqual, false)
 			})
 		})
 	})

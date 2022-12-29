@@ -8,7 +8,6 @@ func All[T any](slice []T, p func(T) bool) bool {
 		}
 	}
 	return true
-
 }
 
 // Any returns true if at least one element matches the given predicate
@@ -36,13 +35,29 @@ func Contains[T any](slice []T, p func(T) bool) bool {
 	return false
 }
 
-// Distinct returns a stream consisting of the distinct elements that match the provided predicate.
-func Distinct[T any, R comparable](slice []T, f func(T) R) []T {
+// Distinct returns a stream consisting of the distinct elements.
+func Distinct[T comparable](slice []T) []T {
+	ret := make([]T, 0)
+	exists := make(map[T]bool)
+
+	for _, e := range slice {
+		_, ok := exists[e]
+		if ok {
+			continue
+		}
+		exists[e] = true
+		ret = append(ret, e)
+	}
+	return ret
+}
+
+// DistinctBy returns a stream consisting of the distinct elements that match the provided predicate.
+func DistinctBy[T any, R comparable](slice []T, p func(T) R) []T {
 	ret := make([]T, 0)
 	exists := make(map[R]bool)
 
 	for _, e := range slice {
-		r := f(e)
+		r := p(e)
 		_, ok := exists[r]
 		if ok {
 			continue
@@ -65,10 +80,20 @@ func Filter[T any](slice []T, p func(T) bool) []T {
 }
 
 // Map returns a slice consisting of the results of applying the given function to the elements of the input slice.
-func Map[T any, R any](slice []T, f func(T) R) []R {
+func Map[T any, R any](slice []T, p func(T) R) []R {
 	res := make([]R, len(slice))
 	for i, e := range slice {
-		res[i] = f(e)
+		res[i] = p(e)
 	}
 	return res
+}
+
+// NoneMatch returns whether no elements match the provided predicate.
+func NoneMatch[T any](slice []T, p func(T) bool) bool {
+	for _, e := range slice {
+		if p(e) {
+			return false
+		}
+	}
+	return true
 }
