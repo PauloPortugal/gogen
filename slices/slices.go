@@ -130,10 +130,19 @@ func NoneMatch[T any](slice []T, p func(T) bool) bool {
 
 // Reduce performs a reduction on the elements of this stream, using the provided initial accumulation
 // and accumulation function to each element of the slice.
-func Reduce[T, R any](slice []T, initAcc R, fn func(R, T) R) R {
+func Reduce[T, R any](slice []T, initAcc R, p func(R, T) R) R {
 	acc := initAcc
 	for _, e := range slice {
-		acc = fn(acc, e)
+		acc = p(acc, e)
 	}
 	return acc
+}
+
+// Skip Returns a slice consisting of the remaining elements of the initial slice stream
+// after discarding the first n elements of the slice.
+func Skip[T any](slice []T, n int) []T {
+	if slice == nil && len(slice) == 0 {
+		return make([]T, 0)
+	}
+	return slice[n:]
 }
