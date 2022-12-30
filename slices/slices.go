@@ -88,6 +88,36 @@ func Map[T, R any](slice []T, p func(T) R) []R {
 	return res
 }
 
+// Max Returns the maximum element of the slice according to the provided predicate.
+func Max[T any](slice []T, p func(T, T) bool) *T {
+	if slice == nil && len(slice) == 0 {
+		return nil
+	}
+	max := slice[0]
+
+	for _, e := range slice {
+		if p(e, max) {
+			max = e
+		}
+	}
+	return &max
+}
+
+// Min Returns the minimum element of the slice according to the provided predicate.
+func Min[T any](slice []T, p func(T, T) bool) *T {
+	if slice == nil && len(slice) == 0 {
+		return nil
+	}
+	min := slice[0]
+
+	for _, e := range slice {
+		if p(e, min) {
+			min = e
+		}
+	}
+	return &min
+}
+
 // NoneMatch returns whether no elements match the provided predicate.
 func NoneMatch[T any](slice []T, p func(T) bool) bool {
 	for _, e := range slice {

@@ -223,6 +223,58 @@ func TestMap(t *testing.T) {
 	})
 }
 
+func TestMax(t *testing.T) {
+	Convey("Given I have an unordered array of numbers between 1 to 10", t, func() {
+		input := []int{2, 4, 6, 8, 10, 1, 3, 5, 7, 9}
+		Convey("When I call 'Min' to test odd numbers", func() {
+			actual := Max(input, func(e int, max int) bool {
+				return e > max
+			})
+			Convey("Then the result should be '10'", func() {
+				So(*actual, ShouldEqual, 10)
+			})
+		})
+	})
+
+	Convey("Given I have an unordered array of numbers between 1 to 10", t, func() {
+		var input []int
+		Convey("When I call 'Max' to test odd numbers", func() {
+			actual := Max(input, func(e int, max int) bool {
+				return e < max
+			})
+			Convey("Then the result should be nil", func() {
+				So(actual, ShouldEqual, nil)
+			})
+		})
+	})
+}
+
+func TestMin(t *testing.T) {
+	Convey("Given I have an unordered array of numbers between 1 to 10", t, func() {
+		input := []int{2, 4, 6, 8, 10, 1, 3, 5, 7, 9}
+		Convey("When I call 'Min' to test odd numbers", func() {
+			actual := Min(input, func(e int, min int) bool {
+				return e < min
+			})
+			Convey("Then the result should be '1'", func() {
+				So(*actual, ShouldEqual, 1)
+			})
+		})
+	})
+
+	Convey("Given I have an unordered array of numbers between 1 to 10", t, func() {
+		var input []int
+		Convey("When I call 'Min' to test odd numbers", func() {
+			actual := Min(input, func(e int, min int) bool {
+				return e < min
+			})
+			Convey("Then the result should be nil", func() {
+				So(actual, ShouldEqual, nil)
+			})
+		})
+	})
+}
+
 func TestNoneMatch(t *testing.T) {
 	Convey("Given I have an array of even numbers from 2 to 20", t, func() {
 		input := []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
