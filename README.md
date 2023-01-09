@@ -1,7 +1,7 @@
 # gogen
 
 [![Build Status](https://github.com/PauloPortugal/gogen/actions/workflows/pr-checks.yml/badge.svg?branch=main)](https://github.com/PauloPortugal/gogen/actions/workflows/pr-checks.yml?query=branch%3Amain)
-
+[![codecov](https://codecov.io/gh/PauloPortugal/gogen/branch/main/graph/badge.svg)](https://codecov.io/gh/PauloPortugal/gogen)
 A simple Golang Generics library, with generic functions for slices
 
 **Dependencies used:**
